@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-	static int L, N, Q;
+		static int L, N, Q;
 	static final int EMPTY = 0;
 	static final int TRAP = 1;
 	static final int WALL = 2;
@@ -50,7 +50,7 @@ public class Main {
 			int k = Integer.parseInt(st.nextToken());
 			originK[idx] = k;
 
-			knightList[idx] = new Knight(idx, r, c, h, w, k, true);
+			knightList[idx] = new Knight(idx, r, c, h, w, k, 0,true);
 			for (int tmpr = r; tmpr < r + h; tmpr++) {
 				for (int tmpc = c; tmpc < c + w; tmpc++) {
 					knightStatus[tmpr][tmpc] = idx;
@@ -58,6 +58,9 @@ public class Main {
 			}
 
 		}
+
+//		for (int i = 0; i < L; i++)
+//			System.out.println(Arrays.toString(knightStatus[i]));
 
 		for (int q = 0; q < Q; q++) {
 			st = new StringTokenizer(br.readLine());
@@ -72,7 +75,7 @@ public class Main {
 			Knight knight = knightList[idx];
 			if(!knight.is_alive) continue;
 			
-			totalDem += (originK[knight.idx] - knight.k);
+			totalDem += knight.dem;
 		}
 		
 		System.out.println(totalDem);
@@ -91,6 +94,7 @@ public class Main {
 		List<Knight> movedKnightList = new ArrayList<>();
 
 		A: while (!q.isEmpty()) {
+//			System.out.println("is_move: "+Arrays.toString(isMove));
 			Knight curKnight = q.poll();
 
 			// 기사를 이동시킬 수 없는 경우: 격자판 밖 or 벽
@@ -100,6 +104,7 @@ public class Main {
 
 			// 기사가 밖으로 나가는 경우 -> 움직이지 못함 & 갱신 불가
 			if (nr < 0 || nc < 0 || nr + curKnight.h > L || nc + curKnight.w > L) {
+//				System.out.println(curKnight.idx+"번째 기사가 밖으로 나갔어요");
 				flag = false;
 				break A;
 			}
@@ -110,6 +115,8 @@ public class Main {
 				for (int tmpc = nc; tmpc < nc + curKnight.w; tmpc++) {
 					// 기사가 벽에 부딪히는 경우 -> 움직이지 못함 && 갱신 불가
 					if(chess[tmpr][tmpc] == WALL) {
+
+//						System.out.println(curKnight.idx+"번째 기사가 벽으로 부딪혔어요");
 						flag = false;
 						break A;
 					}
@@ -122,22 +129,23 @@ public class Main {
 				}
 			}
 			
-			boolean is_alive = true;
 			if(curKnight.idx == idx) ndem = 0;
-			if( curKnight.k-ndem <= 0) is_alive = false;
-			movedKnightList.add(new Knight(curKnight.idx, nr, nc,curKnight.h, curKnight.w, curKnight.k-ndem,is_alive));
-			if(!is_alive) {
-				continue;
-			}
+			Knight newKnight = new Knight(curKnight.idx, nr, nc,curKnight.h, curKnight.w, curKnight.k,curKnight.dem + ndem,true);
+			if(newKnight.k - newKnight.dem <= 0) newKnight.is_alive = false;
+			movedKnightList.add(newKnight);
 			
 		}
 		
 		// 갱신
 		if(flag){
+//			System.out.println(Arrays.toString(knightList));
+//			System.out.println(movedKnightList);
 			for(Knight knight : movedKnightList) {
 				knightList[knight.idx] = knight;
 			}
 			
+//			System.out.println("갱신 후");
+//			System.out.println(Arrays.toString(knightList));
 			
 			for(int i=0;i<L;i++) Arrays.fill(knightStatus[i], 0);
 			for(int i=1;i<knightList.length;i++) {
@@ -150,20 +158,27 @@ public class Main {
 				}
 				
 			}
+			
+
+//			for (int i = 0; i < L; i++)
+//				System.out.println(Arrays.toString(knightStatus[i]));
 		}
+//		System.out.println("-----------------------------------------");
 
 	}
 
 	static class Knight {
 		int idx;
 		int r, c, h, w, k;
+		int dem;
 		boolean is_alive;
 
-		public Knight(int idx, int r, int c, int h, int w, int k, boolean is_alive) {
+		public Knight(int idx, int r, int c, int h, int w, int k, int dem, boolean is_alive) {
 			this(r, c, k, is_alive);
 			this.idx = idx;
 			this.h = h;
 			this.w = w;
+			this.dem = dem;
 		}
 		
 		public Knight(int r, int c, int k, boolean is_alive) {
@@ -180,11 +195,9 @@ public class Main {
 
 		@Override
 		public String toString() {
-			return "Knight [idx=" + idx + ", r=" + r + ", c=" + c + ", h=" + h + ", w=" + w + ", k=" + k + ", is_alive="
-					+ is_alive + "]";
+			return "Knight [idx=" + idx + ", r=" + r + ", c=" + c + ", h=" + h + ", w=" + w + ", k=" + k + ", dem="
+					+ dem + ", is_alive=" + is_alive + "]";
 		}
-		
 
 	}
-
 }
