@@ -97,6 +97,8 @@ public class Main {
 //			System.out.println("is_move: "+Arrays.toString(isMove));
 			Knight curKnight = q.poll();
 
+			if(!curKnight.is_alive) continue;
+
 			// 기사를 이동시킬 수 없는 경우: 격자판 밖 or 벽
 			int nr = curKnight.r + dr[d];
 			int nc = curKnight.c + dc[d];
