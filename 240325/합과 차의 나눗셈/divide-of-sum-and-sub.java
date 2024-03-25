@@ -8,6 +8,6 @@ public class Main {
         double b = sc.nextDouble();
 
         double result = Math.round((a+b)/(a-b)*100.0)/100.0;
-        System.out.print(result);
+        System.out.printf("%.2f",result);
     }
 }
