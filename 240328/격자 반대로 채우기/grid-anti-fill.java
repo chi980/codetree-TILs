@@ -17,13 +17,14 @@ public class Main {
 
         int value = 1;
         int cnt = 0;
-        while(r != n-1 || c != 0){
+        while(check(r,c,n)){
             board[r][c] = value;
             value++;
             cnt++;
-            if(cnt == 4){
+            if(cnt == n){
                 cnt=0;
                 c -=1;
+                if(!(check(r,c,n))) break;
                 board[r][c] = value;
                 d = (d+1)%2;
             }else{
@@ -34,7 +35,7 @@ public class Main {
 
 
         }
-        board[n-1][0] = value;
+        // board[n-1][0] = value;
 
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
@@ -42,5 +43,10 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    static boolean check(int r, int c, int n){
+        if(r<0||c<0||r>=n||c>=n)return false;
+        return true;
     }
 }
