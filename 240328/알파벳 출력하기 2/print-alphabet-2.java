@@ -16,7 +16,7 @@ public class Main {
             for(int j=0;j<n-i;j++){
                 System.out.print(tmp+" ");
                 tmp++;
-                if(tmp-'A' >=27) tmp = 'A';
+                if(tmp-'A' >=26) tmp = 'A';
             }
 
             System.out.println();
