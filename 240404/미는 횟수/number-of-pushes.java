@@ -11,7 +11,7 @@ public class Main {
         
         // String result = a;
         for(int i=1;i<=a.length();i++){
-            a = a.charAt(a.length()-1)+a.substring(0, a.length()-1)
+            a = a.charAt(a.length()-1)+a.substring(0, a.length()-1);
             
             if(a.equals(b)){
                 flag = true;
