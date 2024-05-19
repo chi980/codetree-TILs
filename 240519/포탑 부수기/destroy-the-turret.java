@@ -69,13 +69,14 @@ public class Main {
 //			System.out.println(Arrays.toString(attacker));
 //			printStatus();
 			
-			int[] attacked = selectAttacked(time);
+			int[] attacked = selectAttacked(time, attacker);
+			if(attacked[0] == -1 && attacked[1] == -1) continue;
 			
 //			System.out.println("2. 피공격자 선정");
 //			System.out.println("피공격자");
 //			System.out.println(Arrays.toString(attacked));
 //			printStatus();
-			
+//			
 //			System.out.println("3. 공격");
 			attack(attacker, attacked);
 //			printStatus();
@@ -132,6 +133,7 @@ public class Main {
 			attackTop(newr, newc, power/2);
 		}
 		
+		attackTop(curr, curc, power);
 		
 		
 		return true;
@@ -218,23 +220,44 @@ public class Main {
 		return isArrive;
 	}
 
-	private static int[] selectAttacked(int time) {
+	private static int[] selectAttacked(int time, int[] attacker) {
 		int maxPower = DEAD;
-		int maxTime = time+1;
+		int minTime = time+1;
+		int minSum = R+C;
 		int[] pos = new int[] {-1,-1};
-		// 같은 값일 때 열값이 가장 작으려면 행값이 커야함
+
 		for(int r=R-1;r>=0;r--) {
 			for(int c=0;c<C;c++) {
-				if(maxPower < map[r][c] || (maxPower == map[r][c] && attackTime[r][c] < maxTime)) {
+				if(map[r][c] == DEAD) continue;
+				if(r == attacker[0] && c == attacker[1]) continue;
+				
+				if(maxPower < map[r][c]) {
 					maxPower = map[r][c];
-					maxTime = attackTime[r][c];
+					minTime = attackTime[r][c];
+					minSum = r+c;
 					pos[0] = r;
 					pos[1] = c;
+				}else if(maxPower == map[r][c]) {
+					if(minTime > attackTime[r][c]) {
+						maxPower = map[r][c];
+						minTime = attackTime[r][c];
+						minSum = r+c;
+						pos[0] = r;
+						pos[1] = c;
+					}else if(minTime == attackTime[r][c]) {
+						if(r+c <= minSum) {
+							maxPower = map[r][c];
+							minTime = attackTime[r][c];
+							minSum = r+c;
+							pos[0] = r;
+							pos[1] = c;
+						}
+					}
 				}
 			}
 		}
 		
-
+		if(pos[0] == -1 && pos[1] == -1) return pos; 
 		attackVisited[pos[0]][pos[1]] = true;
 		
 		return pos;
@@ -262,20 +285,39 @@ public class Main {
 
 	private static int[] selectAttacker(int time, int power) {
 		int minPower = 5001; // 최대 5000
-		int minTime = -1;
+		int maxTime = -1;
+		int maxSum = -1;
 		int[] pos = new int[] {-1,-1};
 		
+		// 행과 열의 합이 가장 큰 포탑
 		// 같은 값일 때 열값이 가장 클려면 행값이 작아야 함
 		for(int r=0;r<R;r++) {
 			// 행과 열의 합이 같다면 열갑이 큰 순
 			for(int c=C-1;c>=0;c--) {
 				if(map[r][c] == DEAD) continue;
 				
-				if(map[r][c] < minPower || (map[r][c] == minPower && attackTime[r][c] > minTime)) {
+				if(map[r][c] < minPower) {
 					minPower = map[r][c];
-					minTime =  attackTime[r][c];
+					maxTime =  attackTime[r][c];
+					maxSum = r+c;
 					pos[0]=r;
 					pos[1]=c;
+				}else if(map[r][c] == minPower) {
+					if(maxTime < attackTime[r][c]) {
+						minPower = map[r][c];
+						maxTime =  attackTime[r][c];
+						maxSum = r+c;
+						pos[0]=r;
+						pos[1]=c;
+					}else if(maxTime == attackTime[r][c]) {
+						if(maxSum <= r+c) {
+							minPower = map[r][c];
+							maxTime =  attackTime[r][c];
+							maxSum = r+c;
+							pos[0]=r;
+							pos[1]=c;
+						}
+					}
 				}
 			}
 		}
