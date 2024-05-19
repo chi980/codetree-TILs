@@ -22,11 +22,13 @@ public class Main {
         for(int i=0;i<n;i++){
             int value = 0; // 1~100 사이의 숫자
             int cnt = 0;
+            boolean flag = false;
             for(int j=0;j<n;j++){
                 if(value == map[i][j]) cnt++;
                 else{
                     if(cnt >= m){
                         answer++;
+                        flag = true;
                         break;
                     }else{
                         value = map[i][j];
@@ -34,7 +36,7 @@ public class Main {
                     }
                 }
             }
-            if(cnt >= m){
+            if(cnt >= m&& !flag){
                 answer++;
             }
         }
@@ -42,11 +44,13 @@ public class Main {
         for(int i=0;i<n;i++){
             int value = 0; // 1~100 사이의 숫자
             int cnt = 0;
+            boolean flag = false;
             for(int j=0;j<n;j++){
                 if(value == map[j][i]) cnt++;
                 else{
                     if(cnt >= m){
                         answer++;
+                        flag = true;
                         break;
                     }else{
                         value = map[j][i];
@@ -54,7 +58,7 @@ public class Main {
                     }
                 }
             }
-            if(cnt >= m){
+            if(cnt >= m && !flag){
                 answer++;
             }
         }
