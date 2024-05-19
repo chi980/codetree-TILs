@@ -222,8 +222,8 @@ public class Main {
 		int maxPower = DEAD;
 		int maxTime = time+1;
 		int[] pos = new int[] {-1,-1};
-		
-		for(int r=0;r<R;r++) {
+		// 같은 값일 때 열값이 가장 작으려면 행값이 커야함
+		for(int r=R-1;r>=0;r--) {
 			for(int c=0;c<C;c++) {
 				if(maxPower < map[r][c] || (maxPower == map[r][c] && attackTime[r][c] < maxTime)) {
 					maxPower = map[r][c];
@@ -265,8 +265,8 @@ public class Main {
 		int minTime = -1;
 		int[] pos = new int[] {-1,-1};
 		
-		// 행과 열의 합이 가장 큰 포탑
-		for(int r=R-1;r>=0;r--) {
+		// 같은 값일 때 열값이 가장 클려면 행값이 작아야 함
+		for(int r=0;r<R;r++) {
 			// 행과 열의 합이 같다면 열갑이 큰 순
 			for(int c=C-1;c>=0;c--) {
 				if(map[r][c] == DEAD) continue;
