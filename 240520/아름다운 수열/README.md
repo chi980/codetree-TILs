@@ -5,7 +5,7 @@
 |[Exhaustive Search](https://www.codetree.ai/training-field/search/?tags=Exhaustive+Search), [Sort](https://www.codetree.ai/training-field/search/?tags=Sort)|[일반연습 / 문제은행](https://www.codetree.ai/training-field/home)|
 
 
-
+Permutation으로 풀려다 시간초과 남.. 앞으로는 sort부터 해보자!
 
 
 
