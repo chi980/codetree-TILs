@@ -3,12 +3,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
 public class Main {
 	static int N,M;
 	static int[] A, B;
 	
-	static boolean[] visited;
-	static int[] resultB;
 	static int[] resultA;
 	static boolean[] isBeautiful;
 	
@@ -26,12 +26,23 @@ public class Main {
 		for (int i = 0; i < M; i++) {
 			B[i] = Integer.parseInt(br.readLine().trim());
 		}
+		Arrays.sort(B);
 		
 		resultA = new int[M];
-		resultB = new int[M];
-		visited = new boolean[M];
 		isBeautiful = new boolean[N];
-		Permutation(0);
+		
+		for(int start=0;start+M-1<N;start++) {
+			if(isBeautiful[start]) continue;
+			for(int idx=0;idx<M;idx++) {
+				resultA[idx] = A[start+idx];
+			}
+			
+			Arrays.sort(resultA);
+			
+			if(same(resultA, B)) {
+				isBeautiful[start] = true;
+			}
+		}
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int K = 0;
@@ -46,28 +57,7 @@ public class Main {
 		bw.flush();
 		bw.close();
 	}
-	private static void Permutation(int depth) {
-		if(depth == M) {
-			for(int start=0;start+M-1<N;start++) {
-				if(isBeautiful[start]) continue;
-				for(int idx=0;idx<M;idx++) {
-					resultA[idx] = A[start+idx];
-				}
-				if(same(resultA, resultB)) {
-					isBeautiful[start] = true;
-				}
-			}
-		}
-		
-		for(int i=0;i<M;i++) {
-			if(visited[i]) continue;
-			visited[i] = true;
-			resultB[depth] = B[i];
-			Permutation(depth+1);
-			visited[i] = false;
-		}
-		
-	}
+
 	private static boolean same(int[] arr1, int[] arr2) {
 		int def = arr1[0] - arr2[0];
 		for(int i=1;i<arr1.length;i++) {
