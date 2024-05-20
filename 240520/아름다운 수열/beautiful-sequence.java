@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 public class Main {
 	static int N,M;
 	static int[] A, B;
@@ -31,14 +33,18 @@ public class Main {
 		isBeautiful = new boolean[N];
 		Permutation(0);
 		
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int K = 0;
 		for(int i=0;i<isBeautiful.length;i++) {
 			if(isBeautiful[i]) K++;
 		}
-		System.out.println(K);
+		bw.write(K+"\n");
 		for(int i=0;i<isBeautiful.length;i++) {
-			if(isBeautiful[i]) System.out.println(i+1);
+			if(isBeautiful[i]) bw.write((i+1)+"\n");
 		}
+		
+		bw.flush();
+		bw.close();
 	}
 	private static void Permutation(int depth) {
 		if(depth == M) {
