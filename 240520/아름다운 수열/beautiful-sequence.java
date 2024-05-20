@@ -43,6 +43,7 @@ public class Main {
 	private static void Permutation(int depth) {
 		if(depth == M) {
 			for(int start=0;start+M-1<N;start++) {
+				if(isBeautiful[start]) continue;
 				for(int idx=0;idx<M;idx++) {
 					resultA[idx] = A[start+idx];
 				}
