@@ -63,13 +63,11 @@ public class Main {
 		
 	}
 	private static boolean same(int[] arr1, int[] arr2) {
-		int[] defs = new int[arr1.length];
-		for(int i=0;i<arr1.length;i++) {
-			defs[i] = arr1[i] - arr2[i];
-		}
-
-		for(int i=1;i<defs.length;i++) {
-			if(defs[i] != defs[i-1]) return false;
+		int def = arr1[0] - arr2[0];
+		for(int i=1;i<arr1.length;i++) {
+			int curDef = arr1[i] - arr2[i];
+			
+			if(def != curDef) return false;
 		}
 		return true;
 	}
