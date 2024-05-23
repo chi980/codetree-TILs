@@ -5,7 +5,7 @@
 |[Intermediate Low / Simulation / 격자 안에서 터지고 떨어지는 경우](https://www.codetree.ai/missions?missionId=2)|80xp|![보통][medium]|
 
 
-
+stack을 사용했는데 pointer로 푸는 게 나을 듯
 
 
 
