@@ -4,6 +4,7 @@
 |---|---|---|
 |[Intermediate Low / Simulation / 격자 안에서 터지고 떨어지는 경우](https://www.codetree.ai/missions?missionId=2)|90xp|![보통][medium]|
 
+[ TIP ] 회전 + DOWN을 사용하자..
 
 
 
