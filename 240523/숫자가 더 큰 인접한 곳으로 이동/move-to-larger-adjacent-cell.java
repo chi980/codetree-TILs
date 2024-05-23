@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 public class Main {
-	static int[] dr = { -1, 1, 0, 0 };
+		static int[] dr = { -1, 1, 0, 0 };
 	static int[] dc = { 0, 0, -1, 1 };
 
 	static int R, C;
@@ -49,6 +49,7 @@ public class Main {
 				value = map[newr][newc];
 				curr = newr;
 				curc = newc;
+				break;
 			}
 			
 			if(r == curr && c == curc) {
