@@ -38,6 +38,8 @@ public class Main {
 
 		
 		for (int t = 0; t < T; t++) {
+//			System.out.println("움직이기 전");
+//			printArr(marbles);
 			int[][] newMarbles = new int[R][C];
 			for (int r = 0; r < R; r++) {
 				for (int c = 0; c < C; c++) {
@@ -46,20 +48,26 @@ public class Main {
 					int maxr = r;
 					int maxc = c;
 					int maxValue = map[r][c];
+					
+					boolean flag = false;
 					for (int d = 0; d < 4; d++) {
 						int newr = r + dr[d];
 						int newc = c + dc[d];
 						if (!check(newr, newc))
 							continue;
 						if(maxValue >= map[newr][newc]) continue;
+						if(maxValue == map[newr][newc] && flag) continue;
 						maxValue = map[newr][newc];
 						maxr = newr;
 						maxc = newc;
+						flag = true;
 					}
-					
+//					System.out.printf("%d %d(%d)는 %d %d로 이동\n", r, c, map[r][c], maxr, maxc);
 					newMarbles[maxr][maxc]++;
 				}
 			}
+//			System.out.println("움직인 후");
+//			printArr(newMarbles);
 			
 			for (int r = 0; r < R; r++) {
 				for (int c = 0; c < C; c++) {
@@ -67,6 +75,9 @@ public class Main {
 				}
 			}
 			marbles = newMarbles;
+//			System.out.println("지운 후");
+//			printArr(marbles);
+//			System.out.println("----------------------");
 		}
 
 		
