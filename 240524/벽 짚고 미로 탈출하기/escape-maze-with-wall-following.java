@@ -34,50 +34,53 @@ public class Main {
 		int d = 1;
 		int curr = startr;
 		int curc = startc;
-		int curtime = 0;
+		int curtime = 1;
 		time[curr][curc] = curtime++;
-		boolean flag = true;
 		while (true) {
 
 			int frontr = curr + dr[d];
 			int frontc = curc + dc[d];
 
-			if (!check(frontr, frontc)) {
-				break;
-			}
-			if(time[frontr][frontc] != 0) {
-				flag = false;
-				break;
-			}
-
-			if (map[frontr][frontc] == WALL) {
+			if (check(frontr, frontc) && map[frontr][frontc] == WALL) {
 				d += 3;
 				d %= 4;
+			} else {
+				if (!check(frontr, frontc)) {
+					System.out.println(curtime - 1);
+					break;
+				} else {
 
-				time[curr][curc] = curtime;
-			}else {
-				curr = frontr;
-				curc = frontc;
-				time[curr][curc] = curtime++;
-				
-				int rightr = curr + dr[(d+1)%4];
-				int rightc = curc + dc[(d+1)%4];
-				
-				if(map[rightr][rightc] != WALL) {
-					curr = rightr;
-					curc = rightc;
+					curr = frontr;
+					curc = frontc;
 					time[curr][curc] = curtime++;
-					
-					d += 1;
-					d %= 4;
+					if (!isRightWall(curr, curc, d)) {
+						d += 1;
+						d %= 4;
+						
+						if(!isRightWall(curr+dr[d], curc+dc[d], d)) {
+							System.out.println("-1");
+							break;
+						}
+						curr += dr[d];
+						curc += dc[d];
+						time[curr][curc] = curtime++;
+
+					}
+
 				}
 			}
-
+			
 //			printArr(time);
 		}
-		
-		if(flag) System.out.println(curtime);
-		else System.out.println("-1");
+	}
+
+
+	private static boolean isRightWall(int r, int c, int d) {
+		int rightr = r + dr[(d + 1) % 4];
+		int rightc = c + dc[(d + 1) % 4];
+		if (check(rightr, rightc) && map[rightr][rightc] == WALL)
+			return true;
+		return false;
 	}
 
 	private static boolean check(int r, int c) {
@@ -85,7 +88,7 @@ public class Main {
 			return false;
 		return true;
 	}
-	
+
 	public static void printArr(int[][] arr) {
 		Arrays.stream(arr).forEach(row -> {
 			Arrays.stream(row).mapToObj(value -> value + " ").forEach(System.out::print);
