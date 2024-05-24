@@ -4,7 +4,8 @@
 |---|---|---|
 |[Intermediate Low / Simulation / 격자 안에서 여러 객체를 이동](https://www.codetree.ai/missions?missionId=2)|60xp|![쉬움][easy]|
 
-
+현재 위치보다 큰 숫자x
+인접한 곳 중 가장 큰 숫자O
 
 
 
