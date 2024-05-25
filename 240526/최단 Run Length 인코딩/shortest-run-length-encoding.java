@@ -6,7 +6,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		char[] str = br.readLine().toCharArray();
 
-		int smallRunLength = str.length;
+		int smallRunLength = Integer.MAX_VALUE;
 		for (int i = 0; i < str.length; i++) {
 			shift(str);
 			smallRunLength = Math.min(smallRunLength, getRunLength(str));
@@ -31,6 +31,8 @@ public class Main {
 		}
 
 		length += getLength(cnt);
+//		System.out.println(Arrays.toString(str));
+//		System.out.println(length);
 		return length;
 	}
 
