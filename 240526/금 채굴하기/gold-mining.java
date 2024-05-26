@@ -38,10 +38,10 @@ public class Main {
 					int goldCnt = BFS(r, c, k);
 					int earn = goldCnt*m - cost;
 					
-					if(0 < earn) {
+					if(0 <= earn) {
 						maxGold = Math.max(maxGold, goldCnt);
 					}
-//					System.out.println(getCost(k));
+//					System.out.println(cost);
 //					System.out.println(earn);
 //					System.out.println(goldCnt);
 //					System.out.println("-------------------------");
