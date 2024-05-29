@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  *
  */
 public class Main {
-	static final int INIT = 101;
+	static final int INIT = -1;
 	static final int EMPTY = 0;
 
 	static int[] dr = { -1, 0, 1, 0 };
@@ -45,7 +45,6 @@ public class Main {
 			bomb(m);
 			rotate();
 			bomb(m);
-			rotate();
 		}
 		
 		int bombCnt = (int) Arrays.stream(map)
