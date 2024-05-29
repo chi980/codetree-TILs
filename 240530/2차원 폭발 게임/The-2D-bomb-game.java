@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  *
  */
 public class Main {
-	static final int INIT = -1;
+	static final int INIT = 101;
 	static final int EMPTY = 0;
 
 	static int[] dr = { -1, 0, 1, 0 };
@@ -40,19 +40,29 @@ public class Main {
 				map[r][c] = Integer.parseInt(st.nextToken());
 			}
 		}
+		
+		int lastCnt = getBombCnt();
 
 		for (int i = 0; i < k; i++) {
-			bomb(m);
+			while(true) {
+				bomb(m);
+				int cnt = getBombCnt();
+				if(lastCnt == cnt) break;
+				
+				lastCnt = cnt;
+			}
 			rotate();
-			bomb(m);
 		}
 		
-		int bombCnt = (int) Arrays.stream(map)
-                .flatMapToInt(Arrays::stream)
-                .filter(value -> value > EMPTY)
-                .count();
-
+		bomb(m);
+		
+		int bombCnt = getBombCnt();
 		System.out.println(bombCnt);
+	}
+
+	private static int getBombCnt() {
+		int bombCnt = (int) Arrays.stream(map).flatMapToInt(Arrays::stream).filter(value -> value > EMPTY).count();
+		return bombCnt;
 	}
 
 	private static void bomb(int M) {
@@ -64,7 +74,8 @@ public class Main {
 			int newR = R - 1;
 
 			for (int r = R - 1; r >= 0; r--) {
-				if(map[r][c] == EMPTY) continue;
+				if (map[r][c] == EMPTY)
+					continue;
 				if (last == map[r][c]) {
 					cnt++;
 				} else {
