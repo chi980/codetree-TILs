@@ -43,7 +43,7 @@ public class Main {
 
 		int lastCnt = getBombCnt();
 
-		for (int i = 0; i < k; i++) {
+		for (int i = 0; i < k+1; i++) {
 			while (true) {
 				int[][] lastMap = map;
 				bomb(m);
@@ -53,11 +53,11 @@ public class Main {
 
 				lastCnt = cnt;
 			}
+			
+			if(i == k) break;
 			rotate();
 			gravity();
 		}
-
-		bomb(m);
 
 		int bombCnt = getBombCnt();
 		System.out.println(bombCnt);
