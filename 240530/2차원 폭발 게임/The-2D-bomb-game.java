@@ -41,19 +41,10 @@ public class Main {
 			}
 		}
 
-		int lastCnt = getBombCnt();
 
 		for (int i = 0; i < k+1; i++) {
-			while (true) {
-				int[][] lastMap = map;
-				bomb(m);
-				int cnt = getBombCnt();
-				if (isSame(lastMap, map))
-					break;
-
-				lastCnt = cnt;
+			while (bomb(m)) {
 			}
-			
 			if(i == k) break;
 			rotate();
 			gravity();
@@ -93,24 +84,15 @@ public class Main {
 		map = newMap;
 	}
 
-	private static boolean isSame(int[][] arr1, int[][] arr2) {
-		if(arr1.length != arr2.length) return false;
-		
-		for (int r = 0; r < arr1.length; r++) {
-			if(arr1[r].length != arr2[r].length) return false;
-			for (int c = 0; c < arr1[r].length; c++) {
-				if(arr1[r][c] != arr2[r][c]) return false;
-			}
-		}
-		return true;
-	}
 
 	private static int getBombCnt() {
 		int bombCnt = (int) Arrays.stream(map).flatMapToInt(Arrays::stream).filter(value -> value > EMPTY).count();
 		return bombCnt;
 	}
 
-	private static void bomb(int M) {
+	private static boolean bomb(int M) {
+		boolean canBomb = false;
+		
 		int[][] newMap = new int[R][C];
 		for (int c = 0; c < C; c++) {
 			int last = INIT;
@@ -128,6 +110,8 @@ public class Main {
 						for (int i = 0; i < cnt; i++) {
 							newMap[newR--][c] = last;
 						}
+					}else {
+						canBomb = true;
 					}
 					last = map[r][c];
 					cnt = 1;
@@ -138,10 +122,14 @@ public class Main {
 				for (int i = 0; i < cnt; i++) {
 					newMap[newR--][c] = last;
 				}
+			}else {
+				canBomb = true;
 			}
 		}
 
 		map = newMap;
+		
+		return canBomb;
 	}
 
 	private static void rotate() {
