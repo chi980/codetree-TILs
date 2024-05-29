@@ -40,24 +40,69 @@ public class Main {
 				map[r][c] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
+
 		int lastCnt = getBombCnt();
 
 		for (int i = 0; i < k; i++) {
-			while(true) {
+			while (true) {
+				int[][] lastMap = map;
 				bomb(m);
 				int cnt = getBombCnt();
-				if(lastCnt == cnt) break;
-				
+				if (isSame(lastMap, map))
+					break;
+
 				lastCnt = cnt;
 			}
 			rotate();
+			gravity();
 		}
-		
+
 		bomb(m);
-		
+
 		int bombCnt = getBombCnt();
 		System.out.println(bombCnt);
+	}
+
+	private static void gravity() {
+		int[][] newMap = new int[R][C];
+		for (int c = 0; c < C; c++) {
+			int last = INIT;
+			int cnt = 0;
+
+			int newR = R - 1;
+
+			for (int r = R - 1; r >= 0; r--) {
+				if (map[r][c] == EMPTY)
+					continue;
+				if (last == map[r][c]) {
+					cnt++;
+				} else {
+					for (int i = 0; i < cnt; i++) {
+						newMap[newR--][c] = last;
+					}
+					last = map[r][c];
+					cnt = 1;
+				}
+			}
+
+			for (int i = 0; i < cnt; i++) {
+				newMap[newR--][c] = last;
+			}
+		}
+
+		map = newMap;
+	}
+
+	private static boolean isSame(int[][] arr1, int[][] arr2) {
+		if(arr1.length != arr2.length) return false;
+		
+		for (int r = 0; r < arr1.length; r++) {
+			if(arr1[r].length != arr2[r].length) return false;
+			for (int c = 0; c < arr1[r].length; c++) {
+				if(arr1[r][c] != arr2[r][c]) return false;
+			}
+		}
+		return true;
 	}
 
 	private static int getBombCnt() {
