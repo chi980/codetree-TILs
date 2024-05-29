@@ -45,6 +45,7 @@ public class Main {
 			bomb(m);
 			rotate();
 			bomb(m);
+			rotate();
 		}
 		
 		int bombCnt = (int) Arrays.stream(map)
