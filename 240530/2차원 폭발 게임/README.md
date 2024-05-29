@@ -5,7 +5,7 @@
 |[Intermediate Low / Simulation / 격자 안에서 터지고 떨어지는 경우](https://www.codetree.ai/missions?missionId=2)|90xp|![어려움][hard]|
 
 
-
+터져야 할 폭탄이 없을 때 까지 조건에 맞는 폭탄들을 터뜨리는 것을 반복합니다. -> bomb 함수 내에서 계속 터뜨릴지 아닐지를 boolean값으로 주면 시간을 단축시킬 수 있다.
 
 
 
