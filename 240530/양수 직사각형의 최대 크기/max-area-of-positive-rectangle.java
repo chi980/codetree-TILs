@@ -33,16 +33,17 @@ public class Main {
 				}
 			}
 		}		
-		if (maxDimension == Integer.MAX_VALUE)
+		if (maxDimension == Integer.MIN_VALUE)
 			System.out.println("-1");
 		else
 			System.out.println(maxDimension);
 	}
 
 	private static boolean isPositive(int startr, int startc, int m1, int m2) {
-		for (int r = startr; r < startr+m1; r++) {
-			for (int c = startc; c < startc+m2; c++) {
-				if(map[r][c] <= 0) return false;
+		for (int r = startr; r < startr + m1; r++) {
+			for (int c = startc; c < startc + m2; c++) {
+				if (map[r][c] <= 0)
+					return false;
 			}
 		}
 		return true;
