@@ -32,8 +32,11 @@ public class Main {
 					}
 				}
 			}
-		}
-		System.out.println(maxDimension);
+		}		
+		if (maxDimension == Integer.MAX_VALUE)
+			System.out.println("-1");
+		else
+			System.out.println(maxDimension);
 	}
 
 	private static boolean isPositive(int startr, int startc, int m1, int m2) {
