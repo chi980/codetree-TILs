@@ -129,9 +129,11 @@ public class Main {
 		}
 
 		public boolean canMove(int headr, int headc) {
-			if (this.visited[headr][headc])
-				return false;
-			return true;
+			int tailr = this.body.peek()[0];
+			int tailc = this.body.peek()[1];
+			if (!this.visited[headr][headc] || (headr == tailr && headc == tailc))
+				return true;
+			return false;
 		}
 
 		@Override
