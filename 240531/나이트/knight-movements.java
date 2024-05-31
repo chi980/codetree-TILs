@@ -4,7 +4,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
-	static int[] dr = {-1, -2, -2, -1, 1, 2, 2, 1};
+    static int[] dr = {-1, -2, -2, -1, 1, 2, 2, 1};
 	static int[] dc = {-2, -1, 1, 2, 2, 1, -1, -2};
 
 	static final int NOT_VISITED = -1;
@@ -47,14 +47,14 @@ public class Main {
 				
 				visited[newr][newc] = visited[curr][curc] +1;
 				
-				if(newr == endr && newc == endc) return visited[newr][newc];
+				if(newr == endr && newc == endc) return visited[endr][endc];
 				
 				q.offer(new int[] {newr, newc});
 			}
 		}
 		
 		
-		return -1;
+		return visited[endr][endc];
 	}
 
 	private static boolean canGo(int r, int c, int[][] visited) {
