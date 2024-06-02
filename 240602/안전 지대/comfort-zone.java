@@ -31,7 +31,7 @@ public class Main {
 		boolean[][] visited = new boolean[R][C];
 
 		int maxCnt = 0;
-		int maxK = 0;
+		int maxK = 1;
 		for (int k = 1; k <= maxDepth; k++) {
 			int curCnt = 0;
 			resetArr(visited, false);
