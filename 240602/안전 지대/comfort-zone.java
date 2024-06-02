@@ -32,7 +32,7 @@ public class Main {
 
 		int maxCnt = 0;
 		int maxK = 0;
-		for (int k = 1; k <= maxDepth; k++) {
+		for (int k = 0; k <= maxDepth; k++) {
 			int curCnt = 0;
 			resetArr(visited, false);
 			for (int r = 0; r < R; r++) {
