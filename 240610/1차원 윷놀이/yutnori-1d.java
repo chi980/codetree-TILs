@@ -51,15 +51,6 @@ public class Main {
 			Permutation(depth + 1);
 			degsPerMarker[marker] -= degsPerTurn[depth];
 		}
-
-		for (int marker = 1; marker <= k; marker++) {
-			if (!canGo(marker))
-				continue;
-			degsPerMarker[marker] += degsPerTurn[depth];
-			markers[depth] = marker;
-			Permutation(depth + 1);
-			degsPerMarker[marker] -= degsPerTurn[depth];
-		}
 	}
 
 	private static int getMarkersScore() {
