@@ -81,12 +81,6 @@ public class Main {
 				if (status[r][c].size() < 2)
 					continue;
 
-				Iterator<Integer> iter = status[r][c].iterator();
-				while (iter.hasNext()) {
-					int idx = iter.next();
-					isDead[idx] = true;
-				}
-				
 				status[r][c] = new HashSet<>();
 			}
 		}
@@ -101,39 +95,47 @@ public class Main {
 		}
 		
 		boolean flag = false;
-		for (int idx = 1; idx < marbles.length; idx++) {
-			if (isDead[idx])
-				continue;
-			int[] marble = marbles[idx];
-			int marbler = marble[0];
-			int marblec = marble[1];
-			int marbled = marble[2];
+		
+		for (int r = 0; r < R; r++) {
+			for (int c = 0; c < C; c++) {
+				if (status[r][c].size() == 0)
+					continue;
 
-			int newr = marbler + dr[marbled];
-			int newc = marblec + dc[marbled];
+				Iterator<Integer> iter = status[r][c].iterator();
+				while (iter.hasNext()) {
+					int idx = iter.next();
+					
+					int[] marble = marbles[idx];
+					int marbler = marble[0];
+					int marblec = marble[1];
+					int marbled = marble[2];
 
-			if (!isInRange(newr, newc)) {
-				marbled += 2;
-				marbled %= 4;
+					int newr = marbler + dr[marbled];
+					int newc = marblec + dc[marbled];
 
-				newr = marbler;
-				newc = marblec;
+					if (!isInRange(newr, newc)) {
+						marbled += 2;
+						marbled %= 4;
+
+						newr = marbler;
+						newc = marblec;
+					}
+
+					if (!visited[idx][marbled][newr][newc]) {
+						flag = true;
+					}
+
+					visited[idx][marbled][newr][newc] = true;
+
+					newStatus[newr][newc].add(idx);
+
+					marble[0] = newr;
+					marble[1] = newc;
+					marble[2] = marbled;
+				}
+				
 			}
-
-			if (!visited[idx][marbled][newr][newc]) {
-				flag = true;
-			}
-
-			visited[idx][marbled][newr][newc] = true;
-
-			newStatus[newr][newc].add(idx);
-
-			marble[0] = newr;
-			marble[1] = newc;
-			marble[2] = marbled;
-
 		}
-
 		status = newStatus;
 		
 		return flag;
@@ -152,4 +154,5 @@ public class Main {
 			System.out.println();
 		});
 	}
+
 }
