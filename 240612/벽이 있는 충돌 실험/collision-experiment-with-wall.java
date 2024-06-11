@@ -84,10 +84,6 @@ public class Main {
 				Iterator<Integer> iter = status[r][c].iterator();
 				while (iter.hasNext()) {
 					int idx = iter.next();
-					int[] marble = marbles[idx];
-					int marbler = marble[0];
-					int marblec = marble[1];
-
 					isDead[idx] = true;
 				}
 				
@@ -97,6 +93,13 @@ public class Main {
 	}
 
 	private static boolean moveMarbles() {
+		Set<Integer>[][] newStatus = new HashSet[R][C];
+		for (int r = 0; r < R; r++) {
+			for (int c = 0; c < C; c++) {
+				newStatus[r][c] = new HashSet<>();
+			}
+		}
+		
 		boolean flag = false;
 		for (int idx = 1; idx < marbles.length; idx++) {
 			if (isDead[idx])
@@ -123,8 +126,7 @@ public class Main {
 
 			visited[idx][marbled][newr][newc] = true;
 
-			status[marbler][marblec].remove(idx);
-			status[newr][newc].add(idx);
+			newStatus[newr][newc].add(idx);
 
 			marble[0] = newr;
 			marble[1] = newc;
@@ -132,6 +134,8 @@ public class Main {
 
 		}
 
+		status = newStatus;
+		
 		return flag;
 	}
 
