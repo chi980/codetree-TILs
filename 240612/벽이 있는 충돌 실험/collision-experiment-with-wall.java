@@ -59,8 +59,8 @@ public class Main {
 				marbles[i] = new int[] { r, c, d };
 				visited[i][d][r][c] = true;
 			}
-
-			while (moveMarbles()) {
+			for (int i = 0; i < 2*N; i++) {
+				moveMarbles();
 				killMarbles();
 			}
 
@@ -146,13 +146,6 @@ public class Main {
 			return false;
 		else
 			return true;
-	}
-
-	public static void printArr(int[][] array) {
-		Arrays.stream(array).forEach(row -> {
-			Arrays.stream(row).mapToObj(value -> value + " ").forEach(System.out::print);
-			System.out.println();
-		});
 	}
 
 }
