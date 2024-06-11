@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -10,7 +12,7 @@ public class Main {
 	static int[] dc = { 0, 1, 0, -1 };
 
 	static int R, C;
-	static int[][] status;
+	static Set<Integer>[][] status;
 	static boolean[] isDead;
 	static int[][] marbles;
 	static boolean[][][][] visited;
@@ -26,8 +28,13 @@ public class Main {
 			int M = Integer.parseInt(st.nextToken());
 
 			R = C = N;
-			status = new int[R][C];
-			isDead = new boolean[M+1];
+			status = new HashSet[R][C];
+			for (int r = 0; r < R; r++) {
+				for (int c = 0; c < C; c++) {
+					status[r][c] = new HashSet<>();
+				}
+			}
+			isDead = new boolean[M + 1];
 			marbles = new int[M + 1][3];// 0은 r, 1은 c, 2는 d
 			visited = new boolean[M + 1][4][R][C];
 
@@ -48,7 +55,7 @@ public class Main {
 				else if (dInfo == 'L')
 					d = 3;
 
-				status[r][c]++;
+				status[r][c].add(i);
 				marbles[i] = new int[] { r, c, d };
 				visited[i][d][r][c] = true;
 			}
@@ -56,11 +63,11 @@ public class Main {
 			while (moveMarbles()) {
 				killMarbles();
 			}
-			
+
 			int restMarble = 0;
 			for (int r = 0; r < R; r++) {
 				for (int c = 0; c < C; c++) {
-					restMarble += status[r][c];
+					restMarble += status[r][c].size();
 				}
 			}
 			System.out.println(restMarble);
@@ -71,20 +78,20 @@ public class Main {
 	private static void killMarbles() {
 		for (int r = 0; r < R; r++) {
 			for (int c = 0; c < C; c++) {
-				if(status[r][c] < 2) continue;
-				
-				for(int idx=1;idx<marbles.length;idx++) {
-					if(isDead[idx]) continue;
+				if (status[r][c].size() < 2)
+					continue;
+
+				Iterator<Integer> iter = status[r][c].iterator();
+				while (iter.hasNext()) {
+					int idx = iter.next();
 					int[] marble = marbles[idx];
-					int marbler= marble[0];
+					int marbler = marble[0];
 					int marblec = marble[1];
-					
-					if(r == marbler && c == marblec) {
-						isDead[idx] = true;
-						status[marbler][marblec]--;
-					}
-					
+
+					isDead[idx] = true;
 				}
+				
+				status[r][c] = new HashSet<>();
 			}
 		}
 	}
@@ -92,7 +99,8 @@ public class Main {
 	private static boolean moveMarbles() {
 		boolean flag = false;
 		for (int idx = 1; idx < marbles.length; idx++) {
-			if(isDead[idx]) continue;
+			if (isDead[idx])
+				continue;
 			int[] marble = marbles[idx];
 			int marbler = marble[0];
 			int marblec = marble[1];
@@ -108,16 +116,16 @@ public class Main {
 				newr = marbler;
 				newc = marblec;
 			}
-			
-			if(!visited[idx][marbled][newr][newc]) {
+
+			if (!visited[idx][marbled][newr][newc]) {
 				flag = true;
 			}
-			
+
 			visited[idx][marbled][newr][newc] = true;
-			
-			status[marbler][marblec]--;
-			status[newr][newc]++;
-			
+
+			status[marbler][marblec].remove(idx);
+			status[newr][newc].add(idx);
+
 			marble[0] = newr;
 			marble[1] = newc;
 			marble[2] = marbled;
