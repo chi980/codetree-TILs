@@ -67,7 +67,7 @@ public class Main {
 					continue;
 				if (map[newr][newc] == EMPTY || map[newr][newc] == ABNORMAL)
 					continue;
-				if(time[newr][newc] != 0) continue;
+				if(time[newr][newc] != -2) continue;
 				
 				time[newr][newc] = time[curr][curc]+1;
 				q.offer(new int[] {newr, newc});
