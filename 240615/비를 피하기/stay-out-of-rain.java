@@ -81,6 +81,7 @@ public class Main {
 
 			if (map[curr][curc] == DESTINATION) {
 				minTime = Math.min(minTime, visited[curr][curc]);
+				continue;
 			}
 
 			for (int d = 0; d < 4; d++) {
