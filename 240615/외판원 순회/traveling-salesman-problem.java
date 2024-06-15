@@ -48,6 +48,9 @@ public class Main {
 	}
 
 	private static void visit(int depth, int sumOfCost, int last) {
+        if(minCost!=Integer.MAX_VALUE && sumOfCost >= minCost) {
+			return;
+		}
 		if(depth == N-1) {
 			if(cost[last][0] !=NOT_CONNECTED) {
 				minCost = Math.min(minCost, sumOfCost+cost[last][0]);
