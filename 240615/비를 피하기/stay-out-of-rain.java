@@ -65,12 +65,12 @@ public class Main {
 	private static void BFS(int startr, int startc) {
 		Queue<int[]> q = new ArrayDeque<>();
 		int[][] visited = new int[R][C];
-		for (int r = 0; r < R; r++) {
-			Arrays.fill(visited[r], -1);
-		}
+//		for (int r = 0; r < R; r++) {
+//			Arrays.fill(visited[r], -1);
+//		}
 
 		q.offer(new int[] { startr, startc });
-		visited[startr][startc] = 0;
+		visited[startr][startc] = 1;
 
 		int minTime = Integer.MAX_VALUE;
 
@@ -98,8 +98,8 @@ public class Main {
 		
 		
 		if (minTime == Integer.MAX_VALUE)
-			minTime = -1;
-		time[startr][startc] = minTime;
+			minTime = 0;
+		time[startr][startc] = minTime-1;
 
 	}
 
@@ -108,7 +108,7 @@ public class Main {
 			return false;
 		if (map[r][c] == WALL)
 			return false;
-		if (visited[r][c] != -1)
+		if (visited[r][c] != 0)
 			return false;
 		return true;
 	}
