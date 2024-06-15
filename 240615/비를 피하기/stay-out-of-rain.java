@@ -72,16 +72,14 @@ public class Main {
 		q.offer(new int[] { startr, startc });
 		visited[startr][startc] = 1;
 
-		int minTime = Integer.MAX_VALUE;
-
 		while (!q.isEmpty()) {
 			int[] cur = q.poll();
 			int curr = cur[0];
 			int curc = cur[1];
 
 			if (map[curr][curc] == DESTINATION) {
-				minTime = Math.min(minTime, visited[curr][curc]);
-				continue;
+				time[startr][startc] = visited[curr][curc]-1;	
+				return; // 이미 가장 빠르게 도착, 굳이 다른 목적지를 확인할 필요x
 			}
 
 			for (int d = 0; d < 4; d++) {
@@ -97,9 +95,7 @@ public class Main {
 		}
 		
 		
-		if (minTime == Integer.MAX_VALUE)
-			minTime = 0;
-		time[startr][startc] = minTime-1;
+		time[startr][startc] = -1;
 
 	}
 
