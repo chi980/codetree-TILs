@@ -27,6 +27,8 @@ public class Main {
 		R = C = n;
 		map = new int[R][C];
 		time = new int[R][C];
+		
+		Queue<int[]> q = new ArrayDeque<>();
 
 		for (int r = 0; r < R; r++) {
 			st = new StringTokenizer(br.readLine());
@@ -35,35 +37,22 @@ public class Main {
 				if (map[r][c] == EMPTY)
 					time[r][c] = -1;
 				else if (map[r][c] == NORMAL) {
-					time[r][c] = Integer.MAX_VALUE;
-				} else
+					time[r][c] = -2;
+				} else {
 					time[r][c] = 0;
-			}
-		}
-
-		for (int r = 0; r < R; r++) {
-			for (int c = 0; c < C; c++) {
-				if(map[r][c] == ABNORMAL){
-					BFS(r, c);
+					q.offer(new int[] {r,c});
 				}
 			}
 		}
 		
-		for (int r = 0; r < R; r++) {
-			for (int c = 0; c < C; c++) {
-				if(time[r][c] == Integer.MAX_VALUE) time[r][c] = -2;
-			}
-		}
+		BFS(q);
+
 		
 		printArr(time);
 	}
 
-	private static void BFS(int startr, int startc) {
-		Queue<int[]> q = new ArrayDeque<>();
-		int[][] visited = new int[R][C];
+	private static void BFS(Queue<int[]> q) {
 		
-		q.offer(new int[] { startr, startc });
-		visited[startr][startc] = 1;
 
 		while (!q.isEmpty()) {
 			int[] cur = q.poll();
@@ -78,10 +67,9 @@ public class Main {
 					continue;
 				if (map[newr][newc] == EMPTY || map[newr][newc] == ABNORMAL)
 					continue;
-				if(visited[newr][newc] != 0) continue;
+				if(time[newr][newc] != 0) continue;
 				
-				visited[newr][newc] = visited[curr][curc]+1;
-				time[newr][newc] = Math.min(time[newr][newc], visited[newr][newc]-1);
+				time[newr][newc] = time[curr][curc]+1;
 				q.offer(new int[] {newr, newc});
 				
 			}
