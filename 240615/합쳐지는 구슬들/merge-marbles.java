@@ -124,8 +124,8 @@ public class Main {
 			newc = marble.c;
 		}
 
-		if (newMap[newr][newc] == null) {
-			marble.move(newr, newc, newd);
+		marble.move(newr, newc, newd);
+		if (newMap[marble.r][marble.c] == null) {
 			newMap[marble.r][marble.c] = marble; 
 			newMarbles.add(marble);
 		}else {
