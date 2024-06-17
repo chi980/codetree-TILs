@@ -41,6 +41,7 @@ public class Main {
 		int expIdx = 0;
 		
 		int answer = numbers[exp[expIdx++]-'a'];
+		if(exp.length == 1) return answer;
 		char lastCommand = exp[expIdx++];
 		
 		while(expIdx < exp.length) {
