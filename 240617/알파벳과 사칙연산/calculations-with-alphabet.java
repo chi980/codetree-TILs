@@ -9,7 +9,6 @@ import java.util.Scanner;
  *
  */
 public class Main {
-	
 	static int[] numbers;
 	static char[] exp;
 	
@@ -18,7 +17,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		exp = sc.nextLine().toCharArray();
-		numbers = new int[exp.length];
+		numbers = new int[6];
 		
 		maxResult = Integer.MIN_VALUE;
 		pickNumbers(0);
@@ -26,7 +25,7 @@ public class Main {
 	}
 
 	private static void pickNumbers(int depth) {
-		if(depth >= exp.length) {
+		if(depth >= numbers.length) {
 			int answer = getAnswer();
 			maxResult = Math.max(maxResult, answer);
 			return;
@@ -34,25 +33,31 @@ public class Main {
 		
 		for (int number = 1; number <= 4; number++) {
 			numbers[depth] = number;
-			pickNumbers(depth+2);
+			pickNumbers(depth+1);
 		}
 	}
 
 	private static int getAnswer() {
-		int answer = numbers[0];
-		char lastCommand = '0';
+		int expIdx = 0;
 		
-		for (int i = 1; i < exp.length; i++) {
-			if(i % 2 == 0) {
-				int number = numbers[i];
+		int answer = numbers[exp[expIdx++]-'a'];
+		char lastCommand = exp[expIdx++];
+		
+		while(expIdx < exp.length) {
+			if(expIdx % 2 == 0) {
+				int number = numbers[exp[expIdx] - 'a'];
+				
 				if(lastCommand == '+') answer += number;
 				else if(lastCommand == '-') answer -= number;
 				else if(lastCommand == '*') answer *= number;
 				else break;
 			}else {
-				lastCommand = exp[i];
+
+				lastCommand = exp[expIdx];
 			}
+			expIdx++;
 		}
+		
 		return answer;
 	}
 }
