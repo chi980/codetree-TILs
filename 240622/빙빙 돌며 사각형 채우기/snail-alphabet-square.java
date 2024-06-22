@@ -22,8 +22,11 @@ public class Main {
 		char value = 'A';
 
 		while(cnt < R*C) {
-			map[r][c] = value++;
-			if(value == 'Z'+1) value = 'A';
+			// map[r][c] = value++;
+			// if(value == 'Z'+1) value = 'A';
+			
+			map[r][c] = value;
+			value = (char) ('A' + (value - 'A' + 1) % 26);
 			
 			if(isInRange(r+dr[d], c+dc[d], R,C) && map[r+dr[d]][c+dc[d]]==EMPTY) {
 				r+=dr[d];
