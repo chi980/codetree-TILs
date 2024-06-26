@@ -17,7 +17,7 @@ public class Main {
 		int[] dp = new int[N];
 		Arrays.fill(dp, 1);
 		
-		int maxLen = 0;
+		int maxLen = 1;
 		
 		for (int i = 0; i < N; i++) {
 			for (int j = i-1; j >=0; j--) {
