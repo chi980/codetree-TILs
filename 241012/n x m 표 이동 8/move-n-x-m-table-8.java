@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
 public class Main {
-	static int[] sdr = new int[] { -1, -2, -2, -1, 1, 2, 2, 1 };
+		static int[] sdr = new int[] { -1, -2, -2, -1, 1, 2, 2, 1 };
 	static int[] sdc = new int[] { -2, -1, 1, 2, 2, 1, -1, -2 };
 
 	static int[] dr = new int[] { -1, 0, 1, 0 };
@@ -37,10 +37,12 @@ public class Main {
 	}
 
 	private static int BFS(int[][] map, int R, int C, int K, int startr, int startc) {
-		int[][][] visited = new int[K+1][R][C];
+		boolean[][][] visited = new boolean[K+1][R][C];
+		int[][][] move = new int[K+1][R][C];
 		Queue<int[]> q = new ArrayDeque<>();
 
-		visited[0][startr][startc] = 1;
+		visited[0][startr][startc] = true;
+		move[0][startr][startc] = 1;
 		q.offer(new int[] { startr, startc, 0 });
 
 		while (!q.isEmpty()) {
@@ -59,9 +61,10 @@ public class Main {
 					continue;
 				if (map[newr][newc] == DONT_MOVE)
 					continue;
-				if(visited[curk][newr][newc]!=0) continue;
+				if(visited[curk][newr][newc]) continue;
 				
-				visited[curk][newr][newc] = visited[curk][curr][curc]+1;
+				visited[curk][newr][newc] = true;
+				move[curk][newr][newc] = move[curk][curr][curc]+1;
 				q.offer(new int[] {newr, newc, curk});
 			}
 			
@@ -75,15 +78,19 @@ public class Main {
 					continue;
 				if (map[newr][newc] == DONT_MOVE)
 					continue;
-				if(visited[curk+1][newr][newc]!=0) continue;
+				if(visited[curk+1][newr][newc]) continue;
 				
-				visited[curk+1][newr][newc] = visited[curk][curr][curc]+1;
+				visited[curk+1][newr][newc]= true;
+				move[curk+1][newr][newc] = move[curk][curr][curc]+1;
 				q.offer(new int[] {newr, newc, curk+1});
 			}
 		}
 		int result = Integer.MAX_VALUE;
 		for(int i=0;i<=K;i++) {
-			result = Math.min(result, visited[i][R-1][C-1]);
+			if(!visited[i][R-1][C-1]) continue;
+			result = Math.min(result, move[i][R-1][C-1]);
+//			printMap(move[i]);
+			
 		}
 		return result!=Integer.MAX_VALUE?result-1:-1;
 	}
@@ -95,4 +102,8 @@ public class Main {
 			return true;
 	}
 	
+	public static void printMap(int[][] arr) {
+		Arrays.stream(arr).forEach(row -> System.out.println(Arrays.toString(row)));
+		System.out.println("");
+	}
 }
