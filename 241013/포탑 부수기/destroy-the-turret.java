@@ -70,6 +70,7 @@ public class Main {
 //			System.out.println("attacker: " + Arrays.toString(attacker));
 //			printMap(attackTime);
 			int[] attacked = pickAttacked(attacker);
+			if(attacked[0] == -1 && attacked[1] == -1) break;
 //			printArr(isInAttack);
 
 //			System.out.println("공격전");
@@ -243,7 +244,8 @@ public class Main {
 			}
 		}
 
-		isInAttack[attacked[0]][attacked[1]] = true;
+		if(attacked[0] !=-1 && attacked[1] != -1)isInAttack[attacked[0]][attacked[1]] = true;
+
 
 		return attacked;
 	}
