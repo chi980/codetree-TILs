@@ -17,6 +17,6 @@ public class Main {
     public static int getResult(int a, int b, int c){
         int min = Math.min(a,b);
         min = Math.min(min, c);
-        return min;
+        return a+b;
     }
 }
