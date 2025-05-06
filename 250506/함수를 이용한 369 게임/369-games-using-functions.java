@@ -20,7 +20,7 @@ public class Main {
         char[] charArray = Integer.toString(n).toCharArray();
         for(char c:charArray){
             int tmp = c-'0';
-            if(tmp % 3 == 0) return true;
+            if(tmp!=0 && tmp % 3 == 0) return true;
         }
         return false;
     }
